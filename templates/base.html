@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        {% block title %}
+            <title>Alexia Sousa</title>
+        {% endblock %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+                integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+                crossorigin="anonymous"></script>
+        <link href="{{ url_for('static',filename='style.css') }}" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+
+    {% endblock %}
+
+{% block background %}
+<style>
+        body {
+            background-image: url("../static/images/main.png");
+        }
+    </style>
+{% endblock %}
+
+</head>
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top" style="position: fixed;">
+        <a class="navbar-brand" href="/">Alexia Sousa</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav sm-auto" style="font-size: large;">
+
+                <li class="nav-item">
+                    {% if current_user.is_authenticated %}
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout of {{ current_user.username }}</a>
+                    {% else %}
+                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    {% endif %}
+                </li>
+                    {% if current_user.is_authenticated == False%}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
+                </li>
+                    {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('education') }}">Education</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('users') }}">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+{% endblock %}
+
+<div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages%}
+            <div class="alert alert-{{ category}}">
+            {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</div>
+
+{% block content %}
+
+    {% if current_user.is_authenticated %}
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Sign Up Date</th>
+      <th scope="col">Platform Used</th>
+        <th scope="col">Browser Used</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for user in db_users %}
+        <tr>
+        <th scope="row">{{ user.id }}</th>
+        <td> {{ user.username }}</td>
+        <td> {{ user.email }}</td>
+        <td>{{ user.signup_time.strftime('%Y-%m-%d') }}</td>
+        <td>{{ agent.platform }}</td>
+        <td>{{ agent.browser }}</td>
+        </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+    {% else %}
+    <h1 style="color: hotpink"><strong>MAIN PAGE</strong></h1>
+        <p style="width: 50%">
+        <br><h2>Welcome to my website!</h2><br><br>
+        Here you can register and become
+        part of the community and learn more about my education.
+        <br><br> I am currently looking for an internship so please click
+        on the "Contact" page to get in touch with me!
+         <img src="static/images/face.png" width=7% alt="smiley face">
+        </p>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+
+    <footer class="bg-dark text-white mt-4 fixed-bottom" style="height: 10%">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-12 py-2">
+                    <div class="mb-5 flex-center">
+                        <a href="https://www.facebook.com/alexia.sousa.1" target="_blank"><i
+                                class="fab fa-facebook fa-2x mr-md-5 mr-3 grow-size"></i></a>
+                        <a href="https://www.linkedin.com/in/alexiasousa/" target="_blank"><i
+                                class="fab fa-linkedin fa-2x mr-md-5 mr-3 grow-size"></i></a>
+                        <a href="https://github.com/alexialsousa" target="_blank"><i
+                                class="fab fa-github fa-2x mr-md-5 mr-3 grow-size"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+
+</html>

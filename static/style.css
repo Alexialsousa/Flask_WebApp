@@ -1,0 +1,47 @@
+body {
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-top: 200px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    font-family: unset;
+}
+
+.nav-link:hover , .grow-size:hover {
+    color: hotpink !important;
+  -webkit-transform: scale(1.1);
+   -ms-transform: scale(1.1);
+   transform: scale(1.1);
+}
+
+.fa-2x {
+color: hotpink;
+}
+
+.form-group{
+    text-align: left;
+}
+.content-section{
+    padding-bottom: 100px;
+}
+
+.text-block{
+    background-color: white;
+    color: black;
+    opacity: 0.5;
+    width: 50%;
+}
+.list-group, .table{
+    background-color: white;
+    color:black;
+    text-align:left;
+    opacity: 0.85;
+}
+
+.transparent {
+    opacity: 65%;
+}

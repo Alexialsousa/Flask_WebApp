@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Users</title>{% endblock %}
+
+{% block background %}
+<style>
+        body {
+            background-image: url("../static/images/background.png");
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div>
+    <legend class="border-bottom mb-4"><Strong>USERS</Strong></legend>
+<ul class="list-group">
+    {% for user in db_users %}
+       <li class="list-group-item">{{ user.username }}</li>
+    {% endfor %}
+</ul>
+</div>
+
+{% endblock %}
